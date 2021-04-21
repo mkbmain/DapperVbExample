@@ -1,0 +1,44 @@
+﻿
+--SQL TO CREATE THE DB I WAS USING FOR THIS EXAMPLE
+
+CREATE DATABASE [DapperTestDb]
+
+
+USE [DapperTestDb]
+GO
+
+CREATE TABLE [dbo].[Users](
+[Id] [uniqueidentifier] Not NULL,
+[Name] [varchar](50) Not NULL,
+[Email] [varchar](150) Not NULL,
+[CreatedAt] [datetime] Not NULL,
+CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_Id]  Default (newid()) For [Id]
+GO
+
+
+CREATE TABLE [dbo].[Posts](
+[Id] [int] IDENTITY(1,1) Not NULL,
+[UserId] [uniqueidentifier] Not NULL,
+[Text] [nvarchar](150) Not NULL,
+[PostedAt] [datetime] Not NULL,
+CONSTRAINT [PK_Posts] PRIMARY KEY CLUSTERED 
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Posts]  With CHECK ADD  CONSTRAINT [FK_Posts_Users] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+
+ALTER TABLE [dbo].[Posts] CHECK CONSTRAINT [FK_Posts_Users]
+GO
+
