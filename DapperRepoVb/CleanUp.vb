@@ -1,6 +1,4 @@
-﻿
-
-' this just to clear the db and not really part of the example 
+﻿' this just to clear the db and not really part of the example 
 Imports DapperRepoVb.DbItems
 Imports Mkb.DapperRepo.Repo
 
