@@ -1,4 +1,4 @@
-Imports Mkb.DapperRepo
+Imports Mkb.DapperRepo.Attributes
 
 Namespace DbItems
     <SqlTableName("Users")>                             ' for pluralization but can also be used for old schema names i.e USER_TABLE is a horrible class name but may be a legacy table name

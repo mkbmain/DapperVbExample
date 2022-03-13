@@ -1,5 +1,5 @@
 ﻿' db models here
-Imports Mkb.DapperRepo
+Imports Mkb.DapperRepo.Attributes
 
 Namespace DbItems
     <SqlTableName("Posts")>
