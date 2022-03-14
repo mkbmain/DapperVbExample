@@ -1,3 +1,4 @@
+Imports System.Data.SqlClient
 Imports DapperRepoVb.DbItems
 Imports Mkb.DapperRepo.Repo
 Imports Mkb.DapperRepo.Search
@@ -14,7 +15,7 @@ module Program
     End Sub
 
     Private Sub Run() ' sync
-        Dim repo = New SqlRepo(Connection)
+        Dim repo = New SqlRepo(function() new SqlConnection(Connection))
         ClearDb(repo)
 
 
@@ -60,7 +61,7 @@ module Program
 
     Private Async Function AsyncRun() As Task ' async
 
-        Dim repo = New SqlRepoAsync(Connection)
+        Dim repo = New SqlRepoAsync(function() new SqlConnection(Connection))
         Await ClearDbAsync(repo)
 
 
