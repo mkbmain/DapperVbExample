@@ -1,0 +1,20 @@
+﻿
+
+CREATE TABLE IF NOT EXISTS Users(
+     id   integer
+        constraint user_pk
+            primary key autoincrement,
+    Name       varchar(150) not null,
+	Email varchar(150) Not NULL,
+CreatedAt TimeStamp(6) Not NULL
+);
+
+
+CREATE TABLE Posts(
+   id   integer
+        constraint posts_pk
+            primary key autoincrement,
+UserId int Not NULL,
+Text nvarchar(150) Not NULL,
+PostedAt TimeStamp(6) Not NULL
+);
