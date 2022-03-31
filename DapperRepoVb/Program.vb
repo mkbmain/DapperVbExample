@@ -10,8 +10,11 @@ Imports Mkb.DapperRepo.Search
 
 Module Program
     Private Const SqlFile As String = "OurDbFile.sqlite"
-    Private ReadOnly Connection As DbConnection = New SqliteConnection($"Data Source={SqlFile}")
+    Private ReadOnly GetNewSqlConnection As Func(Of DbConnection) = Function() New SqliteConnection($"Data Source={SqlFile}")
+    Private ReadOnly Connection As DbConnection = GetNewSqlConnection()
     ' you might need to change this depending on where your sql instance is and if its windows auth
+
+
 
     Public Sub Main()
         CreateDb()
@@ -29,7 +32,8 @@ Module Program
 
     Private Async Function AsyncRun() As Task ' async
 
-        Dim repo = New SqlRepoAsync(Function() Connection)
+        Dim repo = New SqlRepoAsync(Function() Connection) ' use it as singleton (single instance used for every Connection)
+        '''     Dim repo = New SqlRepoAsync(GetNewSqlConnection) ' use new dbconnection instance for every call
         Await ClearDbAsync(repo)
 
 
