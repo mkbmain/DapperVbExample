@@ -10,7 +10,7 @@ CreatedAt TimeStamp(6) Not NULL
 );
 
 
-CREATE TABLE Posts(
+CREATE TABLE  IF NOT EXISTS Posts(
    id   integer
         constraint posts_pk
             primary key autoincrement,
