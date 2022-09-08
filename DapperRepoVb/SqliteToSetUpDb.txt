@@ -14,7 +14,8 @@ CREATE TABLE  IF NOT EXISTS Posts(
    id   integer
         constraint posts_pk
             primary key autoincrement,
-UserId int Not NULL,
+user_id int Not NULL,
 Text nvarchar(150) Not NULL,
-PostedAt TimeStamp(6) Not NULL
+PostedAt TimeStamp(6) Not NULL,
+ FOREIGN KEY(user_id) REFERENCES Users(id)
 );

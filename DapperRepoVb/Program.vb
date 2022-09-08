@@ -22,11 +22,14 @@ Module Program
     End Sub
 
     Private Sub CreateDb()
-        If (File.Exists(SqlFile) = False) Then
-            File.WriteAllBytes(SqlFile, Array.Empty(Of Byte))
+        If (File.Exists(SqlFile)) Then
+
+            File.Delete(SqlFile)
+        End If
+        File.WriteAllBytes(SqlFile, Array.Empty(Of Byte))
             Dim setup As String = File.ReadAllText("SqliteToSetUpDb.txt")
             Connection.Execute(setup)
-        End If
+
     End Sub
 
 
