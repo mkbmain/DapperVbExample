@@ -35,8 +35,8 @@ Module Program
 
     Private Async Function AsyncRun() As Task ' async
 
-        Dim repo = New SqlRepoAsync(Function() Connection) ' use it as singleton (single instance used for every Connection)
-        '''     Dim repo = New SqlRepoAsync(GetNewSqlConnection) ' use new dbconnection instance for every call
+        Dim repo = New SqlRepoAsync(Function() Connection) ' option 1 .. its singleton (single instance used for every Connection)
+        '''     Dim repo = New SqlRepoAsync(GetNewSqlConnection) ' option 2.. new dbconnection instance for every call
         Await ClearDbAsync(repo)
 
 
