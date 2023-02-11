@@ -58,13 +58,13 @@ Module Program
                                        End Function).ToArray()
 
         ' we search for 11 post
-        Dim elven = (Await repo.Search(Of Post)(NameOf(Post.Text), "%11%")).ToArray()
-        If elven.Count() <> 1 Then
+        Dim elven = (Await repo.Search(Of Post)(NameOf(Post.Text), "%11%")).FirstOrDefault()
+        If elven Is Nothing Then
             Throw New Exception("Opps")
         End If
         ' we edit the post
-        elven.First().Text = "Edited"
-        Await repo.Update(elven.First())
+        elven.Text = "Edited"
+        Await repo.Update(elven)
 
         ' we get all posts again from db
         Dim allPosts = Await repo.GetAll(Of Post)
