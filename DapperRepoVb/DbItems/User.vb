@@ -8,5 +8,8 @@ Namespace DbItems
         Public Property Name() As String
          Public Property Email() As String
          Public Property CreatedAt() As DateTime
+        
+        <SqlIgnoreColumn()>
+        Public Property UniqueId() As String = Email + Name
     End Class
 End NameSpace
