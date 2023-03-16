@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.2" />
-    <PackageReference Include="Mkb.DapperRepo" Version="2.2.6-beta" />
+    <PackageReference Include="Mkb.DapperRepo" Version="2.2.7" />
   </ItemGroup>
 
   <ItemGroup>
