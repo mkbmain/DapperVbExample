@@ -1,5 +1,4 @@
 ﻿' db models here
-Imports System.ComponentModel.DataAnnotations
 Imports Mkb.DapperRepo.Attributes
 
 Namespace DbItems

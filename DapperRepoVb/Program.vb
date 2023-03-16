@@ -6,15 +6,11 @@ Imports Microsoft.Data.Sqlite
 Imports Mkb.DapperRepo.Repo
 Imports Mkb.DapperRepo.Search
 
-
-
 Module Program
     Private Const SqlFile As String = "OurDbFile.sqlite"
     Private ReadOnly GetNewSqlConnection As Func(Of DbConnection) = Function() New SqliteConnection($"Data Source={SqlFile}")
     Private ReadOnly Connection As DbConnection = GetNewSqlConnection()
     ' you might need to change this depending on where your sql instance is and if its windows auth
-
-
 
     Public Sub Main()
         CreateDb()
@@ -32,14 +28,11 @@ Module Program
 
     End Sub
 
-
     Private Async Function AsyncRun() As Task ' async
 
         Dim repo = New SqlRepoAsync(Function() Connection) ' use it as singleton (single instance used for every Connection)
         '''     Dim repo = New SqlRepoAsync(GetNewSqlConnection) ' use new dbconnection instance for every call
         Await ClearDbAsync(repo)
-
-
 
         ' we add a user
         Dim user As User = New User With {.CreatedAt = DateTime.Now, .Email = "test@email.com", .Name = "Michael"}
@@ -50,7 +43,6 @@ Module Program
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(3), .Email = "test4@email.com", .Name = "Jane"})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test4@email.com", .Name = "Jane"})
         ' we add a post
-
 
         Enumerable.Range(0, 22).Select(Function(e)
                                            repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id, .Text = $"Test{e}Post"})
