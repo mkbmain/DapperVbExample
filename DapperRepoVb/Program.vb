@@ -45,7 +45,7 @@ Module Program
         ' we add a post
 
         Enumerable.Range(0, 22).Select(Function(e)
-                                           repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id, .Text = $"Test{e}Post"})
+                                           repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id.Value, .Text = $"Test{e}Post"})
                                            Return e
                                        End Function).ToArray()
 
