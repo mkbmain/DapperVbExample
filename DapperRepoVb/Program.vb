@@ -8,7 +8,10 @@ Imports Mkb.DapperRepo.Search
 
 Module Program
     Private Const SqlFile As String = "OurDbFile.sqlite"
-    Private ReadOnly GetNewSqlConnection As Func(Of DbConnection) = Function() New SqliteConnection($"Data Source={SqlFile}")
+
+    Private ReadOnly _
+        GetNewSqlConnection As Func(Of DbConnection) = Function() New SqliteConnection($"Data Source={SqlFile}")
+
     Private ReadOnly Connection As DbConnection = GetNewSqlConnection()
     ' you might need to change this depending on where your sql instance is and if its windows auth
 
@@ -22,15 +25,15 @@ Module Program
 
             File.Delete(SqlFile)
         End If
-        File.WriteAllBytes(SqlFile, Array.Empty(Of Byte))
-            Dim setup As String = File.ReadAllText("SqliteToSetUpDb.txt")
-            Connection.Execute(setup)
-
+        File.WriteAllBytes(SqlFile, Array.Empty (Of Byte))
+        Dim setup As String = File.ReadAllText("SqliteToSetUpDb.txt")
+        Connection.Execute(setup)
     End Sub
 
     Private Async Function AsyncRun() As Task ' async
 
-        Dim repo = New SqlRepoAsync(Function() Connection) ' use it as singleton (single instance used for every Connection)
+        Dim repo = New SqlRepoAsync(Function() Connection) _
+        ' use it as singleton (single instance used for every Connection)
         '''     Dim repo = New SqlRepoAsync(GetNewSqlConnection) ' use new dbconnection instance for every call
         Await ClearDbAsync(repo)
 
@@ -39,18 +42,20 @@ Module Program
         Await repo.Add(user)
         Dim users = Await repo.GetExactMatches(user, False)
         Await repo.Add(New User With {.CreatedAt = DateTime.Now, .Email = "test2@email.com", .Name = ""})
-        Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test3@email.com", .Name = "John"})
+        Await _
+            repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(- 1), .Email = "test3@email.com", .Name = "John"})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(3), .Email = "test4@email.com", .Name = "Jane"})
-        Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test4@email.com", .Name = "Jane"})
+        Await _
+            repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(- 1), .Email = "test4@email.com", .Name = "Jane"})
         ' we add a post
 
         Enumerable.Range(0, 22).Select(Function(e)
-                                           repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id.Value, .Text = $"Test{e}Post"})
-                                           Return e
-                                       End Function).ToArray()
+            repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id.Value, .Text = $"Test{e}Post"})
+            Return e
+        End Function).ToArray()
 
         ' we search for 11 post
-        Dim elven = (Await repo.Search(Of Post)(NameOf(Post.Text), "%11%")).FirstOrDefault()
+        Dim elven = (Await repo.Search (Of Post)(NameOf(Post.Text), "%11%")).FirstOrDefault()
         If elven Is Nothing Then
             Throw New Exception("Opps")
         End If
@@ -59,17 +64,21 @@ Module Program
         Await repo.Update(elven)
 
         ' we get all posts again from db
-        Dim allPosts = Await repo.GetAll(Of Post)
+        Dim allPosts = Await repo.GetAll (Of Post)
 
         ' get by name this is a quick exact match on 1 type
-        Dim getByName = Await repo.GetAllByX(Of User, String)(NameOf(user.Name), "John")
+        Dim getByName = Await repo.GetAllByX (Of User, String)(NameOf(user.Name), "John")
 
+        dim querySingleExample =
+                Await repo.QuerySingle(of User)("select * from Users where name like @name", new  with {.name = "John"})
+        
         ' more complex search with multiple things to check
         Dim search = Await repo.Search(New User With {.Name = "Jane", .CreatedAt = DateTime.Now},
                                        {New SearchCriteria _
                                           With {.PropertyName = NameOf(user.Name), .SearchType = SearchType.Equals},
                                         New SearchCriteria _
-                                          With {.PropertyName = NameOf(user.CreatedAt), .SearchType = SearchType.GreaterThan}})
+                                          With {.PropertyName = NameOf(user.CreatedAt),
+                                          .SearchType = SearchType.GreaterThan}})
 
 
         ' we check edit happened
