@@ -69,9 +69,10 @@ Module Program
         ' get by name this is a quick exact match on 1 type
         Dim getByName = Await repo.GetAllByX (Of User, String)(NameOf(user.Name), "John")
 
+        Console.WriteLine(getByName.First().Email)
         dim querySingleExample =
                 Await repo.QuerySingle(of User)("select * from Users where name like @name", new  with {.name = "John"})
-        
+        Console.WriteLine(querySingleExample.Email)
         ' more complex search with multiple things to check
         Dim search = Await repo.Search(New User With {.Name = "Jane", .CreatedAt = DateTime.Now},
                                        {New SearchCriteria _
@@ -80,7 +81,7 @@ Module Program
                                           With {.PropertyName = NameOf(user.CreatedAt),
                                           .SearchType = SearchType.GreaterThan}})
 
-
+        Console.WriteLine(search.First().Email)
         ' we check edit happened
         If (allPosts.Any(Function(t) t.Text = "Edited") = False) Then
             Throw New Exception("Opps")
