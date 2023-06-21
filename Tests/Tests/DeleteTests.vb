@@ -7,7 +7,7 @@ Public Class DeleteTests
     Inherits BaseDbTestClass
 
     <Fact>
-    Async Function EnsureWeCanUpdate() As Task
+    Async Function EnsureWeCanDelete() As Task
         Await AddUser()
         Dim User = Await GetFirstUser()
         Assert.NotNull(User)
