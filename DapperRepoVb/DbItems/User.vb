@@ -6,7 +6,9 @@ Namespace DbItems
         <PrimaryKey()>                                  ' used to denote this is primary key for lookups updates etc
         Public Property Id() As Nullable(Of Integer)       ' marked as nullable as db auto insert so we don't need to, repo won't insert null fields
         Public Property Name() As String
-         Public Property Email() As String
-         Public Property CreatedAt() As DateTime
+        Public Property Email() As String
+        Public Property CreatedAt() As DateTime
+        <SqlIgnoreColumn()>
+        Public Property UniqueId() As String = Email + Name
     End Class
 End NameSpace
