@@ -1,4 +1,5 @@
 ﻿Imports DapperRepoVb.DbItems
+Imports Mkb.DapperRepo.Search
 Imports Tests.Tests
 Imports Xunit
 
@@ -12,7 +13,7 @@ Public Class GetTests
         Dim userFromDb = Await Repo.GetById(New User With {.Id = user.Id})
 
         ' asserts
-        UserAreEqual(user, userFromDb)
+        Assert.True(UserAreEqual(user, userFromDb))
     End Function
 
 
@@ -30,6 +31,21 @@ Public Class GetTests
     End Function
 
     <Fact>
+    Async Function EnsureWeCanGetAllByX() As Task
+
+        Await AddUser()
+        Await AddUser()
+        Await AddUser("john")
+        Await AddUser()
+        ' get
+        Dim usersFromDb = Await Repo.GetAllByX(Of User, String)(NameOf(User.Name), "john")
+
+        ' asserts
+        Assert.Equal(1, usersFromDb.Count)
+        Assert.True(UserAreEqual(user, usersFromDb.First()))
+    End Function
+
+    <Fact>
     Async Function EnsureWeCanSearch() As Task
 
         Await AddUser()
@@ -37,10 +53,11 @@ Public Class GetTests
         Dim user As User = Await AddUser("john")
         Await AddUser()
         ' get
-        Dim usersFromDb = Await Repo.GetAllByX(Of User, String)(NameOf(user.Name), user.Name)
+        Dim usersFromDb = Await Repo.Search(Of User)(New User With {.CreatedAt = user.CreatedAt.AddDays(1), .Email = user.Email},
+{SearchCriteria.Create(NameOf(user.Email), SearchType.Equals), SearchCriteria.Create(NameOf(user.CreatedAt), SearchType.LessThan)})
 
         ' asserts
         Assert.Equal(1, usersFromDb.Count)
-        Assert.Equal(user, usersFromDb.First())
+        Assert.True(UserAreEqual(user, usersFromDb.First()))
     End Function
 End Class
