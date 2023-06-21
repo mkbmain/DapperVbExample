@@ -14,22 +14,9 @@ Module Program
     Private ReadOnly Connection As DbConnection = GetNewSqlConnection()
     ' you might need to change this depending on where your sql instance is and if its windows auth
 
-
-
     Public Sub Main()
-        CreateDb()
+        CreateDbHelper.CreateDb(SqlFile, Connection)
         Task.Run(AddressOf AsyncRun).GetAwaiter().GetResult()
-    End Sub
-
-    Private Sub CreateDb()
-        If (File.Exists(SqlFile)) Then
-
-            File.Delete(SqlFile)
-        End If
-        File.WriteAllBytes(SqlFile, Array.Empty(Of Byte))
-            Dim setup As String = File.ReadAllText("SqliteToSetUpDb.txt")
-            Connection.Execute(setup)
-
     End Sub
 
 
