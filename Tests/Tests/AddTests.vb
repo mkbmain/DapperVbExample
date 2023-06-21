@@ -13,7 +13,7 @@ Public Class AddTests
         Await Repo.Add(user)
 
         ' asserts
-        Dim result As User = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
+        Dim result As User = Await GetFirstUser()
         Assert.Equal(user.Email, result.Email)
         Assert.Equal(user.Name, result.Name)
         Assert.Equal(user.CreatedAt, result.CreatedAt)

@@ -9,20 +9,15 @@ Public Class UpdateTests
     <Fact>
     Async Function EnsureWeCanUpdate() As Task
         Dim name As String = "Mike"
-        Await _
-            Connection.ExecuteAsync(
-                New CommandDefinition($"insert into users (Name,CreatedAt,Email) values ('{name}','2020-01-01','test')"))
-        Dim result As User = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
-        Assert.NotNull(result)
-        Assert.Equal(name, result.Name)
 
-
+        Dim user As User = Await AddUser()
+        Assert.NotEqual(name, user.Name)
         ' update
-        result.Name = name + "2"
-        Await Repo.Update(result)
+        user.Name = name
+        Await Repo.Update(user)
 
         ' asserts
-        result = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
-        Assert.Equal(name + "2", result.Name)
+        user = Await GetFirstUser()
+        Assert.Equal(name, user.Name)
     End Function
 End Class
