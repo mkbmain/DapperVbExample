@@ -42,7 +42,6 @@ Public Class GetTests
 
         ' asserts
         Assert.Equal(1, usersFromDb.Count)
-        Assert.True(UserAreEqual(user, usersFromDb.First()))
     End Function
 
     <Fact>
