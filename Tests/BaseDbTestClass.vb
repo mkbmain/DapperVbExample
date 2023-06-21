@@ -18,14 +18,14 @@ Namespace Tests
         End Sub
 
         Public Async Function GetFirstUser() As Task(Of User)
-            Return Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
+            Return Await Connection.QueryFirstOrDefaultAsync(Of User)(New CommandDefinition("select * from users"))
         End Function
 
         Public Async Function AddUser() As Task(Of User)
             Await _
      Connection.ExecuteAsync(
          New CommandDefinition($"insert into users (Name,CreatedAt,Email) values ('mike','2020-01-01','test')"))
-            Dim result As User = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
+            Dim result As User = Await GetFirstUser()
             Assert.NotNull(result)
             Return result
         End Function
