@@ -9,11 +9,12 @@ Namespace Tests
 
         <Fact>
         Async Function EnsureWeCanAdd() As Task
-            dim user = new User With{.Email="test",.Name="Mike",.CreatedAt= DateTime.Now}
+            ' how we add
+            Dim user = New User With {.Email = "test", .Name = "Mike", .CreatedAt = DateTime.Now}
             Await Repo.Add(user)
 
-            dim result as User =
-                    Await Connection.QueryFirstAsync (of User)(new CommandDefinition("select * from users"))
+            ' asserts
+            Dim result As User = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
             Assert.Equal(user.Email, result.Email)
             Assert.Equal(user.Name, result.Name)
             Assert.Equal(user.CreatedAt, result.CreatedAt)
