@@ -8,21 +8,21 @@ Public Class UpdateTests
 
     <Fact>
     Async Function EnsureWeCanUpdate() As Task
-        ' how we addfewfgwergerte
-        dim name as String = "Mike"
+        Dim name As String = "Mike"
         Await _
             Connection.ExecuteAsync(
-                new CommandDefinition($"insert into users (Name,CreatedAt,Email) values ('{name}','2020-01-01','test')"))
-        Dim result As User = Await Connection.QueryFirstAsync (Of User)(New CommandDefinition("select * from users"))
+                New CommandDefinition($"insert into users (Name,CreatedAt,Email) values ('{name}','2020-01-01','test')"))
+        Dim result As User = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
         Assert.NotNull(result)
         Assert.Equal(name, result.Name)
+
+
+        ' update
         result.Name = name + "2"
-
-
         Await Repo.Update(result)
 
         ' asserts
-        result = Await Connection.QueryFirstAsync (Of User)(New CommandDefinition("select * from users"))
+        result = Await Connection.QueryFirstAsync(Of User)(New CommandDefinition("select * from users"))
         Assert.Equal(name + "2", result.Name)
     End Function
 End Class
