@@ -29,9 +29,10 @@ Module Program
 
 
         ' we add a user
+        ' lets add some users
         Dim user As User = New User With {.CreatedAt = DateTime.Now, .Email = "test@email.com", .Name = "Michael"}
-        Await repo.Add(user)
 
+        Await repo.Add(user)
         Await repo.Add(New User With {.CreatedAt = DateTime.Now, .Email = "test2@email.com", .Name = ""})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test3@email.com", .Name = "John"})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(3), .Email = "test4@email.com", .Name = "Jane"})
@@ -68,7 +69,7 @@ Module Program
 
 
         ' we check edit happened
-        If (allPosts.Any(Function(t) t.Text = "Edited") = False) Then
+        If allPosts.Any(Function(t) t.Text = "Edited") = False Then
             Throw New Exception("Opps")
         End If
 
