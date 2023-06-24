@@ -18,6 +18,19 @@ Public Class GetTests
 
 
     <Fact>
+    Async Function EnsureWeCount() As Task
+        Dim user As User = Await AddUser()
+        Await AddUser()
+        Await AddUser()
+        Await AddUser()
+        ' get
+        Dim usersFromDb = Await Repo.Count(Of User)
+
+        ' asserts
+        Assert.Equal(4, usersFromDb)
+    End Function
+
+    <Fact>
     Async Function EnsureWeCanGetAll() As Task
         Dim user As User = Await AddUser()
         Await AddUser()
