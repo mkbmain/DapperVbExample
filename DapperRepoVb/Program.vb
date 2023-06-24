@@ -28,18 +28,18 @@ Module Program
 
         ' we add a user
         ' lets add some users
-        Dim user As User = New User With {.CreatedAt = DateTime.Now, .Email = "test@email.com", .Name = "Michael"}
+        Dim user As User = New User With {.CreatedAt = Date.Now, .Email = "test@email.com", .Name = "Michael"}
 
         Await repo.Add(user)
-        Await repo.Add(New User With {.CreatedAt = DateTime.Now, .Email = "test2@email.com", .Name = ""})
-        Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test3@email.com", .Name = "John"})
-        Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(3), .Email = "test4@email.com", .Name = "Jane"})
-        Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test4@email.com", .Name = "Jane"})
+        Await repo.Add(New User With {.CreatedAt = Date.Now, .Email = "test2@email.com", .Name = ""})
+        Await repo.Add(New User With {.CreatedAt = Date.Now.AddDays(-1), .Email = "test3@email.com", .Name = "John"})
+        Await repo.Add(New User With {.CreatedAt = Date.Now.AddDays(3), .Email = "test4@email.com", .Name = "Jane"})
+        Await repo.Add(New User With {.CreatedAt = Date.Now.AddDays(-1), .Email = "test4@email.com", .Name = "Jane"})
         ' we add a post
         Dim users = Await repo.GetExactMatches(user, False)
 
         Enumerable.Range(0, 22).Select(Function(e)
-                                           repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id, .Text = $"Test{e}Post"})
+                                           repo.Add(New Post With {.PostedAt = Date.Now, .UserId = users.First().Id, .Text = $"Test{e}Post"})
                                            Return e
                                        End Function).ToArray()
 
@@ -59,7 +59,7 @@ Module Program
         Dim getByName = Await repo.GetAllByX(Of User, String)(NameOf(user.Name), "John")
 
         ' more complex search with multiple things to check
-        Dim search = Await repo.Search(New User With {.Name = "Jane", .CreatedAt = DateTime.Now},
+        Dim search = Await repo.Search(New User With {.Name = "Jane", .CreatedAt = Date.Now},
                                        {New SearchCriteria _
                                           With {.PropertyName = NameOf(user.Name), .SearchType = SearchType.Equals},
                                         New SearchCriteria _
