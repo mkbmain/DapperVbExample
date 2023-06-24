@@ -31,7 +31,7 @@ Public Class GetTests
     End Function
 
     <Fact>
-    Async Function EnsureWeCanSearchCount() As Task
+    Async Function EnsureWeCanSearchCountSingleCriteria() As Task
 
         Await AddUser()
         Await AddUser()
@@ -39,6 +39,22 @@ Public Class GetTests
         Await AddUser()
         ' get
         Dim usersFromDb = Await Repo.SearchCount(New User With {.Name = "john"}, SearchCriteria.Create(NameOf(User.Name), SearchType.Equals))
+
+        ' asserts
+        Assert.Equal(1, usersFromDb)
+    End Function
+
+
+    <Fact>
+    Async Function EnsureWeCanSearchCount() As Task
+
+        Await AddUser()
+        Await AddUser()
+        Dim user As User = Await AddUser("john")
+        Await AddUser()
+        ' get
+        Dim usersFromDb = Await Repo.SearchCount(New User With {.CreatedAt = user.CreatedAt.AddDays(1), .Email = user.Email},
+{SearchCriteria.Create(NameOf(user.Email), SearchType.Equals), SearchCriteria.Create(NameOf(user.CreatedAt), SearchType.LessThan)})
 
         ' asserts
         Assert.Equal(1, usersFromDb)
