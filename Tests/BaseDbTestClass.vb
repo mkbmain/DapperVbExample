@@ -26,7 +26,7 @@ Namespace Tests
             End If
             Await _
      Connection.ExecuteAsync(
-         New CommandDefinition($"insert into users (Name,CreatedAt,Email) values ('{name}','2020-01-01','{Guid.NewGuid()}')"))
+         New CommandDefinition($"insert into users (Name,CreatedAt,Email) values ('{name}','{Date.Now:yyyy-MM-dd}','{Guid.NewGuid()}')"))
             Dim result As User = Await GetFirstUser()
             Assert.NotNull(result)
             Return result

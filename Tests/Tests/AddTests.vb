@@ -8,7 +8,7 @@ Public Class AddTests
     <Fact>
     Async Function EnsureWeCanAdd() As Task
         ' how we add
-        Dim user = New User With {.Email = "test", .Name = "Mike", .CreatedAt = DateTime.Now}
+        Dim user = New User With {.Email = "test", .Name = "Mike", .CreatedAt = Date.Now}
         Await Repo.Add(user)
 
         ' asserts
