@@ -1,6 +1,4 @@
 Imports System.Data.Common
-Imports System.IO
-Imports Dapper
 Imports DapperRepoVb.DbItems
 Imports Microsoft.Data.Sqlite
 Imports Mkb.DapperRepo.Repo
@@ -29,15 +27,16 @@ Module Program
 
 
         ' we add a user
+        ' lets add some users
         Dim user As User = New User With {.CreatedAt = DateTime.Now, .Email = "test@email.com", .Name = "Michael"}
+
         Await repo.Add(user)
-        Dim users = Await repo.GetExactMatches(user, False)
         Await repo.Add(New User With {.CreatedAt = DateTime.Now, .Email = "test2@email.com", .Name = ""})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test3@email.com", .Name = "John"})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(3), .Email = "test4@email.com", .Name = "Jane"})
         Await repo.Add(New User With {.CreatedAt = DateTime.Now.AddDays(-1), .Email = "test4@email.com", .Name = "Jane"})
         ' we add a post
-
+        Dim users = Await repo.GetExactMatches(user, False)
 
         Enumerable.Range(0, 22).Select(Function(e)
                                            repo.Add(New Post With {.PostedAt = DateTime.Now, .UserId = users.First().Id, .Text = $"Test{e}Post"})
@@ -68,7 +67,7 @@ Module Program
 
 
         ' we check edit happened
-        If (allPosts.Any(Function(t) t.Text = "Edited") = False) Then
+        If allPosts.Any(Function(t) t.Text = "Edited") = False Then
             Throw New Exception("Opps")
         End If
 

@@ -1,4 +1,3 @@
-Imports System
 Imports Microsoft.Data.Sqlite
 Imports System.Data.Common
 Imports DapperRepoVb
@@ -18,7 +17,7 @@ Namespace Tests
         End Sub
 
         Public Async Function GetFirstUser() As Task(Of User)
-            Return Await Connection.QueryFirstOrDefaultAsync(Of User)(New CommandDefinition("select * from users"))
+            Return Await Connection.QueryFirstOrDefaultAsync(Of User)(New CommandDefinition("select * from users limit 1"))
         End Function
 
         Public Async Function AddUser(Optional name As String = Nothing) As Task(Of User)
