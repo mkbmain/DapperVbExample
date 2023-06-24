@@ -1,6 +1,4 @@
 Imports System.Data.Common
-Imports System.IO
-Imports Dapper
 Imports DapperRepoVb.DbItems
 Imports Microsoft.Data.Sqlite
 Imports Mkb.DapperRepo.Repo
