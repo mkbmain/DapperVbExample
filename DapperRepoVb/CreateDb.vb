@@ -5,7 +5,7 @@ Imports Dapper
 
 Public Class CreateDbHelper
     Public Shared Sub CreateDb(sqlFile As String, connection As DbConnection)
-        If (File.Exists(sqlFile)) Then
+        If File.Exists(sqlFile) Then
 
             File.Delete(sqlFile)
         End If
