@@ -5,10 +5,10 @@ Namespace DbItems
     <SqlTableName("Posts")>
     Public Class Post
         <PrimaryKey()>
-        Public Property Id() As Nullable(Of Int32)
+        Public Property Id() As Integer?
         <SqlColumnName("user_id")>
         Public Property UserId() As Integer
         Public Property Text() As String
-        Public Property PostedAt() As DateTime
+        Public Property PostedAt() As Date
     End Class
 End NameSpace
