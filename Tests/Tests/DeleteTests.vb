@@ -1,7 +1,5 @@
-﻿Imports DapperRepoVb.DbItems
-Imports Tests.Tests
+﻿Imports Tests.Tests
 Imports Xunit
-Imports Dapper
 
 Public Class DeleteTests
     Inherits BaseDbTestClass

@@ -4,8 +4,6 @@ Imports Microsoft.Data.Sqlite
 Imports Mkb.DapperRepo.Repo
 Imports Mkb.DapperRepo.Search
 
-
-
 Module Program
     Private Const SqlFile As String = "OurDbFile.sqlite"
     Private ReadOnly GetNewSqlConnection As Func(Of DbConnection) = Function() New SqliteConnection($"Data Source={SqlFile}")
