@@ -1,3 +1,4 @@
+Imports System.Data.Common
 Imports Dapper
 Imports Tests.Tests
 Imports Xunit
@@ -12,13 +13,18 @@ Public Class ExecuteTests
         Dim User = Await GetFirstUser()
         Assert.NotNull(User)
         ' delete
-        
-        Dim tablesNum = Connection.Query(of String)("SELECT name FROM sqlite_master")
-        Assert.True(1 <tablesNum.Count())
-        Await Repo.Execute("CREATE TABLE  " + TableName + " (id   integer constraint posts_pk primary key autoincrement)")
+
+        Dim tablesNum = GetTables(Connection).Count()
+        Assert.True(1 < tablesNum)
+        Await _
+            Repo.Execute("CREATE TABLE  " + TableName + " (id   integer constraint posts_pk primary key autoincrement)")
 
         ' asserts
-        Dim tables =connection.Query(of String)("SELECT name FROM sqlite_master")
-        Assert.True(tables.Count() > tablesNum.Count())
+        dim newTables = GetTables(Connection).Count()
+        Assert.True(newTables > tablesNum)
+    End Function
+
+    Private Function GetTables(connection as DbConnection) As IEnumerable(Of String)
+        Return connection.Query (of String)("SELECT name FROM sqlite_master")
     End Function
 End Class
