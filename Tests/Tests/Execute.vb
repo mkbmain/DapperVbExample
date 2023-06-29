@@ -6,7 +6,7 @@ Public Class ExecuteTests
     Inherits BaseDbTestClass
 
     <Fact>
-    Async Function EnsureWeCanDelete() As Task
+    Async Function EnsureWeCanExecute() As Task
         Await AddUser()
         Const TableName = "boohoo"
         Dim User = Await GetFirstUser()
