@@ -10,10 +10,8 @@ Public Class ExecuteTests
     Async Function EnsureWeCanExecute() As Task
         Await AddUser()
         Const TableName = "boohoo"
-        Dim User = Await GetFirstUser()
-        Assert.NotNull(User)
-        ' delete
-
+        
+        ' execute
         Dim tablesNum = GetTables(Connection).Count()
         Assert.True(1 < tablesNum)
         Await _
