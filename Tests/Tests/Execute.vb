@@ -3,23 +3,24 @@ Imports Tests.Tests
 Imports Xunit
 
 Public Class ExecuteTests
-	Inherits BaseDbTestClass
+    Inherits BaseDbTestClass
 
-	<Fact>
-	Async Function EnsureWeCanDelete() As Task
-		Await AddUser()
-		Const TableName = "boohoo"
-		Dim User = Await GetFirstUser()
-		Assert.NotNull(User)
-		' delete
+    <Fact>
+    Async Function EnsureWeCanDelete() As Task
+        Await AddUser()
+        Const TableName = "boohoo"
+        Dim User = Await GetFirstUser()
+        Assert.NotNull(User)
+        ' delete
 
 
-		Dim tables = Connection.Execute("SELECT name FROM sqlite_master  WHERE type='" + TableName + "'")
-		Assert.Equal(-1, tables)
-		Await Repo.Execute("CREATE TABLE  " + TableName + " (id   integer constraint posts_pk primary key autoincrement)")
+        Dim tablesNum = Connection.Query(of String)("SELECT name FROM sqlite_master")
+        Assert.True(1 <tablesNum.Count())
+        Await _
+            Repo.Execute("CREATE TABLE  " + TableName + " (id   integer constraint posts_pk primary key autoincrement)")
 
-		' asserts
-		tables = Connection.Execute("SELECT name FROM sqlite_master  WHERE type='" + TableName + "'")
-	'	Assert.Equal(1, tables)
-	End Function
+        ' asserts
+        Dim tables =connection.Query(of String)("SELECT name FROM sqlite_master")
+        Assert.True(tables.Count() > tablesNum.Count())
+    End Function
 End Class
