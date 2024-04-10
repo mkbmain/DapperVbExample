@@ -33,7 +33,7 @@ Namespace Tests
         End Function
 
         Public Shared Function UserAreEqual(user As User, user2 As User) As Boolean
-            Return user.Id = user2.Id AndAlso user.CreatedAt = user2.CreatedAt AndAlso user.Email = user.Email
+            Return user.Id = user2.Id AndAlso user.CreatedAt = user2.CreatedAt AndAlso user2.Email = user.Email
         End Function
     End Class
 End Namespace
