@@ -1,19 +1,21 @@
-﻿Imports Tests.Tests
-Imports Xunit
+﻿Imports Xunit
 
-Public Class DeleteTests
-    Inherits BaseDbTestClass
+Namespace Tests
 
-    <Fact>
-    Async Function EnsureWeCanDelete() As Task
-        Await AddUser()
-        Dim User = Await GetFirstUser()
-        Assert.NotNull(User)
-        ' delete
-        Await Repo.Delete(User)
+    Public Class DeleteTests
+        Inherits BaseDbTestClass
 
-        ' asserts
-        User = Await GetFirstUser()
-        Assert.Null(User)
-    End Function
-End Class
+        <Fact>
+        Async Function EnsureWeCanDelete() As Task
+            Await AddUser()
+            Dim user = Await GetFirstUser()
+            Assert.NotNull(user)
+            ' delete
+            Await Repo.Delete(user)
+
+            ' asserts
+            user = Await GetFirstUser()
+            Assert.Null(user)
+        End Function
+    End Class
+End NameSpace

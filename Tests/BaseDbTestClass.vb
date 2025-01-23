@@ -12,15 +12,15 @@ Namespace Tests
         Protected ReadOnly Connection As DbConnection = New SqliteConnection("Data Source=" + _dbName)
         Protected ReadOnly Repo As SqlRepoAsync = New SqlRepoAsync(Function() Connection)
 
-        Public Sub New()
+        Protected Sub New()
             CreateDbHelper.CreateDb(_dbName, Connection)
         End Sub
 
-        Public Async Function GetFirstUser() As Task(Of User)
+        Protected Async Function GetFirstUser() As Task(Of User)
             Return Await Connection.QueryFirstOrDefaultAsync(Of User)(New CommandDefinition("select * from users limit 1"))
         End Function
 
-        Public Async Function AddUser(Optional name As String = Nothing) As Task(Of User)
+        Protected Async Function AddUser(Optional name As String = Nothing) As Task(Of User)
             If name = Nothing Then
                 name = "mike"
             End If
@@ -32,7 +32,7 @@ Namespace Tests
             Return result
         End Function
 
-        Public Shared Function UserAreEqual(user As User, user2 As User) As Boolean
+        Protected Shared Function UserAreEqual(user As User, user2 As User) As Boolean
             Return user.Id = user2.Id AndAlso user.CreatedAt = user2.CreatedAt AndAlso user2.Email = user.Email
         End Function
     End Class
