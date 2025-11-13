@@ -3,12 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>DapperRepoVb</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.1" />
-    <PackageReference Include="Mkb.DapperRepo" Version="2.4.0" />
+    <PackageReference Include="Mkb.DapperRepo" Version="2.5.10" />
   </ItemGroup>
 
   <ItemGroup>
