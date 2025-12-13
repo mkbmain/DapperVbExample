@@ -8,12 +8,12 @@ Imports DapperRepoVb.DbItems
 
 Namespace Tests
     Public Class BaseDbTestClass
-        Protected ReadOnly _dbName As String = Guid.NewGuid.ToString() + ".db"
-        Protected ReadOnly Connection As DbConnection = New SqliteConnection("Data Source=" + _dbName)
+        Protected ReadOnly DbName As String = Guid.NewGuid.ToString() + ".db"
+        Protected ReadOnly Connection As DbConnection = New SqliteConnection("Data Source=" + DbName)
         Protected ReadOnly Repo As SqlRepoAsync = New SqlRepoAsync(Function() Connection)
 
         Protected Sub New()
-            CreateDbHelper.CreateDb(_dbName, Connection)
+            CreateDbHelper.CreateDb(DbName, Connection)
         End Sub
 
         Protected Async Function GetFirstUser() As Task(Of User)
