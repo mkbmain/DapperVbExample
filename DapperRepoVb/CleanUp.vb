@@ -4,15 +4,13 @@ Imports Mkb.DapperRepo.Repo
 
 Module CleanUp
     Private Sub DeleteAllOfType(Of T)(repo As SqlRepo)
-        Dim items = repo.GetAll(Of T)()
-        For Each item As T In items
+        For Each item As T In repo.GetAll(Of T)()
             repo.Delete(item)
         Next
     End Sub
     
     Private Async Function DeleteAllOfTypeAsync(Of T)(repo As SqlRepoAsync) As Task
-        Dim items = Await repo.GetAll(Of T)()
-        For Each item As T In items
+        For Each item As T In Await repo.GetAll(Of T)()
             Await repo.Delete(item)
         Next
     End Function
