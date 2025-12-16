@@ -12,7 +12,7 @@ Module Program
 
     Public Sub Main()
         CreateDbHelper.CreateDb(SqlFile, Connection)
-        Task.Run(AddressOf AsyncRun).GetAwaiter().GetResult()
+        AsyncRun().GetAwaiter().GetResult()
     End Sub
 
 
